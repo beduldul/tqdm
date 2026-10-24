@@ -1545,9 +1545,10 @@ def test_colour(caperr, colour, ansi):
     assert ansi in caperr()
 
 
-def test_colour_unknown():
+@mark.parametrize("colour", ["charm", "#00ff0g", "#GGGGGG", "#", "#fff"])
+def test_colour_unknown(colour):
     with warns(TqdmWarning, match="Unknown colour") as record:
-        with tqdm(total=1, colour="charm") as t:
+        with tqdm(total=1, colour=colour) as t:
             assert record  # warned on construction
             t.update()
 
